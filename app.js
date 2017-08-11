@@ -18,6 +18,7 @@ handler.on('error', function (err) {
 });
 
 handler.on('push', function (event) {
+    console.log(event.payload.ref.substr(-6));
     if (event.payload.ref.substr(-6) == "master") {
         rumCMD("sh", ["./shell.sh"], (data) => {
             console.log(data);
