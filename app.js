@@ -3,7 +3,7 @@
  */
 const http = require('http');
 const createHandler = require('github-webhook-handler');
-const handler = createHandler({ path: '/', secret: 'myhashsecret' });
+const handler = createHandler({ path: '/webhook', secret: 'myhashsecret' });
 const spawn = require("child_process").spawn;
 
 http.createServer(function (req, res) {
