@@ -8,11 +8,10 @@ const spawn = require("child_process").spawn;
 http.createServer(function (req, res) {
     if (req.url.split('?').shift() !== path) {
         const event = req.headers['x-github-event'];
-        if (event.payload.ref.substr(-6) == "master") {
-            rumCMD("sh", ["./shell.sh"], (data) => {
-                console.log(data);
-            });
-        }
+        console.log(event);
+        rumCMD("sh", ["./shell.sh"], (data) => {
+            console.log(data);
+        });
         res.writeHead(200, { 'content-type': 'application/json' });
         res.end('{"ok":true}');
     }
