@@ -6,7 +6,7 @@ const spawn = require("child_process").spawn;
 
 http.createServer(function (req, res) {
     const event = req.headers['x-github-event'];
-    console.log(event);
+    console.log(event.payload.ref, "====");
     rumCMD("sh", ["./shell.sh"], (data) => {
         console.log(data);
     });
