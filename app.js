@@ -2,29 +2,15 @@
  * Created by boom on 2017/8/11.
  */
 const http = require('http');
-const createHandler = require('github-webhook-handler');
-const handler = createHandler({ path: '/', secret: '123456' });
 const spawn = require("child_process").spawn;
 
 http.createServer(function (req, res) {
-    handler(req, res, function (err) {
-        res.statusCode = 404
-        res.end('no such location')
-    })
+    rumCMD("sh", ["./shell.sh"], (data) => {
+        console.log(data);
+    });
+    res.writeHead(200, { 'content-type': 'application/json' });
+    res.end('{"ok":true}');
 }).listen(7777);
-
-handler.on('error', function (err) {
-    console.error('Error:', err.message)
-});
-
-handler.on('push', function (event) {
-    console.log(event.payload.ref.substr(-6));
-    if (event.payload.ref.substr(-6) == "master") {
-        rumCMD("sh", ["./shell.sh"], (data) => {
-            console.log(data);
-        });
-    }
-});
 
 function rumCMD(cmd, args, cb) {
     const child = spawn(cmd, args);
