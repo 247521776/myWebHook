@@ -9,7 +9,7 @@ http.createServer(function (req, res) {
     if (req.url.split('?').shift() !== path) {
         const event = req.headers['x-github-event'];
         if (event.payload.ref.substr(-6) == "master") {
-            rumCMD(sh, ["./shell.sh"], (data) => {
+            rumCMD("sh", ["./shell.sh"], (data) => {
                 console.log(data);
             });
         }
