@@ -3,7 +3,7 @@
  */
 const http = require('http');
 const createHandler = require('github-webhook-handler');
-const handler = createHandler({ path: '/', secret: 'myhashsecret' });
+const handler = createHandler({ path: '/', secret: '' });
 const spawn = require("child_process").spawn;
 
 http.createServer(function (req, res) {
@@ -19,7 +19,7 @@ handler.on('error', function (err) {
 
 handler.on('push', function (event) {
     if (event.payload.ref.substr(-6) == "master") {
-        rumCMD(sh, ["./shell.sh"], (data) => {
+        rumCMD("sh", ["./shell.sh"], (data) => {
             console.log(data);
         });
     }
