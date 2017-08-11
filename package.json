@@ -1,0 +1,25 @@
+{
+  "name": "myWebHook",
+  "version": "1.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/247521776/myWebHook.git"
+  },
+  "keywords": [
+    "webhook"
+  ],
+  "author": "yanglei",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/247521776/myWebHook/issues"
+  },
+  "homepage": "https://github.com/247521776/myWebHook#readme",
+  "dependencies": {
+    "github-webhook-handler": "^0.6.0"
+  }
+}
