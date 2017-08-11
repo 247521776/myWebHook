@@ -2,43 +2,21 @@
  * Created by boom on 2017/8/11.
  */
 const http = require('http');
-const createHandler = require('github-webhook-handler');
-const handler = createHandler({ path: '/webhook', secret: 'myhashsecret' });
+const path = "/webhook";
 const spawn = require("child_process").spawn;
 
 http.createServer(function (req, res) {
-    handler(req, res, function (err) {
-        if (err) {
-            res.statusCode = 404;
-            res.end('no such location');
+    if (req.url.split('?').shift() !== path) {
+        const event = req.headers['x-github-event'];
+        if (event.payload.ref.substr(-6) == "master") {
+            rumCMD(sh, ["./shell.sh"], (data) => {
+                console.log(data);
+            });
         }
-        else {
-            res.statusCode = 200;
-            res.end('success');
-        }
-    });
-}).listen(7777);
-
-handler.on('error', function (err) {
-    console.error('Error:', err.message)
-});
-
-handler.on('push', function (event) {
-    console.log("====");
-    if (event.payload.ref.substr(-6) == "master") {
-        rumCMD(sh, ["./shell.sh"], (data) => {
-            console.log(data);
-        });
+        res.writeHead(200, { 'content-type': 'application/json' });
+        res.end('{"ok":true}');
     }
-});
-
-handler.on('issues', function (event) {
-    console.log('Received an issue event for %s action=%s: #%d %s',
-        event.payload.repository.name,
-        event.payload.action,
-        event.payload.issue.number,
-        event.payload.issue.title);
-});
+}).listen(7777);
 
 function rumCMD(cmd, args, cb) {
     const child = spawn(cmd, args);
